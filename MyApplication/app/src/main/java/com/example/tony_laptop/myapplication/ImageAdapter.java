@@ -9,6 +9,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Tony_Laptop on 2/17/2018.
  */
@@ -16,20 +19,21 @@ import com.squareup.picasso.Picasso;
 public class ImageAdapter extends BaseAdapter {
 
     private Context mContext;
-    private String[] mThumbIds;
+    private ArrayList<String> mThumbIds;
 
-    public ImageAdapter(Context c) {
+    public ImageAdapter(Context c, ArrayList<String> resources) {
         mContext = c;
+        mThumbIds = resources;
     }
 
     @Override
     public int getCount() {
-        return mThumbIds.length;
+        return mThumbIds.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mThumbIds[position];
+        return mThumbIds.get(position);
     }
 
     @Override
@@ -42,16 +46,15 @@ public class ImageAdapter extends BaseAdapter {
         ImageView img;
         if (convertView == null) {
             img = new ImageView(mContext);
-            img.setLayoutParams(new GridView.LayoutParams(85, 85));
-            img.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            img.setPadding(8, 8, 8, 8);
+            img.setLayoutParams(new GridView.LayoutParams(100, 100));
+            //img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            img.setPadding(1, 1, 1, 1);
         } else {
             img = (ImageView) convertView;
         }
 
         String url = (String) getItem(position);
-        Picasso.with(mContext).load(url).placeholder(R.mipmap.ic_launcher).fit().centerCrop().into(img);
-        img.setImageResource(mThumbIds[position]);
+        Picasso.with(mContext).load(url).fit().centerCrop().into(img);
         return img;
     }
 }
